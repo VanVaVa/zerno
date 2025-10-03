@@ -1,0 +1,31 @@
+@import "../../shared/theme/colors";
+
+.header {
+  display: flex;
+  padding: 30px 151px 22px 160px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 60px;
+  font-weight: 500;
+
+  a {
+    color: $color-black;
+  }
+
+  .filled {
+    background-color: $color-blue;
+    padding: 15px 21px;
+    border-radius: 12px;
+
+    a {
+      color: $color-white;
+      font-weight: 700;
+    }
+  }
+}
