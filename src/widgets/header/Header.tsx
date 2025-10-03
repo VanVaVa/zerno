@@ -9,7 +9,7 @@ const Header = () => (
     </Link>
     <ul className={styles.list}>
       <li>
-        <Link href="/">О нас</Link>
+        <Link href="#about">О нас</Link>
       </li>
       <li>
         <Link href="/">Услуги</Link>

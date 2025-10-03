@@ -1,0 +1,22 @@
+.wrapper {
+  padding-block: 13px;
+  display: flex;
+  gap: 45px;
+  align-items: center;
+  animation: 8s linear infinite normal move;
+  min-width: 200vw;
+
+  &[data-direction="left"] {
+    animation-direction: reverse;
+  }
+
+  @keyframes move {
+    from {
+      translate: -726px 0px;
+    }
+
+    to {
+      translate: 0px 0px;
+    }
+  }
+}
