@@ -1,0 +1,43 @@
+.imageWrapper {
+  border-radius: 20px;
+  overflow: hidden;
+  width: 433;
+  height: 508;
+  position: relative;
+}
+
+.figure {
+  margin-top: 50px;
+  display: flex;
+  gap: 60px;
+
+  p {
+    max-width: 546px;
+    font-size: 26px;
+    font-weight: 500;
+  }
+}
+
+.header {
+  font-size: 40px;
+}
+
+.wrapper {
+  display: flex;
+  min-width: 100vw;
+  padding-top: 200px;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageOverlay {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.3s;
+
+  &:hover {
+    opacity: 1;
+  }
+}

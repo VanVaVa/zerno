@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="ru">
       <body className={`${montserrat.variable}`}>
         <Header />
-        {children}
+        <main style={{ paddingTop: 106 }}>{children}</main>
       </body>
     </html>
   );

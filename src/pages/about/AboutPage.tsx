@@ -5,7 +5,7 @@ import LogoLine from "@/shared/components/logoLine/LogoLine";
 const AboutPage = () => (
   <>
     <div id="about" className={styles.wrapper}>
-      <h2>О нас</h2>
+      <h1>О нас</h1>
       <div className={styles.section}>
         <p>
           Мы — команда специалистов с опытом более 10 лет в рекламе и
@@ -36,7 +36,7 @@ const AboutPage = () => (
       </div>
       <span className={styles.subtitle}>
         Наша сила — в креативе, надёжности и умении довести проект до{" "}
-        <span>результата</span>!
+        <strong>результата</strong>!
       </span>
     </div>
     <div className={styles.logoLineWrapper}>
