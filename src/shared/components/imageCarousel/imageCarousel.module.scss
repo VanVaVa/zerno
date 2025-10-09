@@ -1,0 +1,30 @@
+.carouselWrapper {
+  max-width: 2016px; // 672px * 3
+  margin: 0 auto;
+  padding: 20px;
+  padding-bottom: 0;
+
+  // Стили для десктопа
+  .imageWrapper {
+    position: relative;
+    width: 672px;
+    height: 400px; // задайте нужную высоту
+    margin: 0 auto;
+  }
+
+  // Стили для мобильных устройств
+  @media (max-width: 768px) {
+    padding: 0;
+
+    .imageWrapper {
+      width: 330px;
+      height: 250px; // задайте нужную высоту для мобильных
+
+      // Центральный слайд
+      &.slick-center {
+        transform: scale(1.05); // небольшое увеличение центрального слайда
+        transition: transform 0.3s ease;
+      }
+    }
+  }
+}

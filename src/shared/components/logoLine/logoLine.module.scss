@@ -20,3 +20,28 @@
     }
   }
 }
+
+.wrapper_logo {
+  padding-block: 16px;
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  animation: 2s linear infinite normal move;
+  min-width: 200vw;
+  background-color: #6cbaff;
+  font-size: 22px;
+
+  &[data-direction="left"] {
+    animation-direction: reverse;
+  }
+
+  @keyframes move {
+    from {
+      translate: -173px 0px;
+    }
+
+    to {
+      translate: 0px 0px;
+    }
+  }
+}

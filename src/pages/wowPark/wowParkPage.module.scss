@@ -1,0 +1,40 @@
+@import "../../shared/theme/colors";
+
+.article {
+  display: flex;
+  width: 950px;
+  justify-content: stretch;
+
+  strong {
+    font-weight: 600;
+    color: $color-blue;
+  }
+
+  p {
+    max-width: 550px;
+  }
+
+  div {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.articleWrapper {
+  margin: 51px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex: 1;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: calc(100vh - 106px);
+}
