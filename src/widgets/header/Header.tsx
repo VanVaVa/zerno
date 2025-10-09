@@ -18,7 +18,7 @@ const Header = () => (
         <Link href="/wow-park">WOW-парк</Link>
       </li>
       <li>
-        <Link href="/">Портфолио</Link>
+        <Link href="/portfolio">Портфолио</Link>
       </li>
       <li>
         <Link href="/">Контакты</Link>

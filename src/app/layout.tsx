@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.scss";
+import "react-photo-view/dist/react-photo-view.css";
 import Header from "@/widgets/header/Header";
 
 const montserrat = Montserrat({

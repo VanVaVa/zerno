@@ -1,0 +1,31 @@
+@import "../../theme/colors";
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 60px;
+  row-gap: 90px;
+}
+
+.figure {
+  position: relative;
+  width: 770px;
+  height: 520px;
+
+  div {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  h2 {
+    color: $color-white;
+    font-size: 28px;
+    font-weight: 500;
+  }
+}
