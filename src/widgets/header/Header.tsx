@@ -24,7 +24,7 @@ const Header = () => (
         <Link href="/">Контакты</Link>
       </li>
       <li className={styles.filled}>
-        <Link href="/">Заказать услугу</Link>
+        <Link href="/feedback">Заказать услугу</Link>
       </li>
     </ul>
   </header>
