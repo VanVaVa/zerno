@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.scss";
 import "react-photo-view/dist/react-photo-view.css";
 import Header from "@/widgets/header/Header";
+import Footer from "@/widgets/footer/Footer";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={`${montserrat.variable}`}>
         <Header />
         <main style={{ paddingTop: 106 }}>{children}</main>
+        <Footer />
       </body>
     </html>
   );
