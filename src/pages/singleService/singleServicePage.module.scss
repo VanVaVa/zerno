@@ -1,26 +1,4 @@
-.imageWrapper {
-  border-radius: 20px;
-  overflow: hidden;
-  width: 433;
-  height: 508;
-  position: relative;
-}
-
-.figure {
-  margin-top: 50px;
-  display: flex;
-  gap: 60px;
-
-  p {
-    max-width: 546px;
-    font-size: 26px;
-    font-weight: 500;
-  }
-}
-
-.header {
-  font-size: 40px;
-}
+@import "../../shared/theme/colors";
 
 .wrapper {
   display: flex;
@@ -30,14 +8,127 @@
   align-items: center;
 }
 
-.imageOverlay {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: all 0.3s;
+.headerImageWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 869px;
+  padding-top: 176px;
+  color: $color-white;
 
-  &:hover {
-    opacity: 1;
+  div {
+    max-width: 1234px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  img {
+    z-index: -1;
+  }
+
+  h2 {
+    font-size: 40px;
+    font-weight: 500;
+  }
+
+  h1 {
+    font-size: 70px;
+  }
+}
+
+.textWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 101px 106px 91px 247px;
+  gap: 170px;
+}
+
+.leftContent {
+  max-width: 611px;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  font-size: 28px;
+  font-weight: 500;
+
+  .listSection {
+    margin-inline: -80px;
+    padding: 35px 80px;
+    border: 4px $color-blue solid;
+    border-radius: 30px;
+    font-size: 32px;
+  }
+
+  .buttonWrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  a {
+    padding: 22px 73px;
+    border: none;
+    border-radius: 30px;
+    font-size: 36px;
+    font-weight: 500;
+    background: linear-gradient(0.25turn, #ffd1d1 0%, #ff9999 100%);
+    cursor: pointer;
+    transition: opacity 0.3s;
+    font-family: Montserrat, sans-serif;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  li {
+    margin-left: 40px;
+  }
+
+  h2 {
+    font-size: 36px;
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+.rightContent {
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  gap: 31px;
+  align-items: stretch;
+
+  section {
+    padding: 33px 53px;
+    font-size: 24px;
+    font-weight: 500;
+    display: flex;
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 9px;
+    }
+  }
+
+  section:nth-of-type(odd) {
+    background-color: #c7e5ff;
+    border-radius: 30px;
+  }
+}
+
+.examplesWrapper {
+  padding: 80px 160px 73px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  background: linear-gradient(#c7e5ff 0%, #fff 100%);
+
+  h2 {
+    font-size: 44px;
+    font-weight: 500;
   }
 }

@@ -1,0 +1,143 @@
+.gallery {
+  display: grid;
+  gap: 27px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* Одно изображение */
+.single {
+  grid-template-columns: 1fr;
+}
+
+.single .imageContainer {
+  aspect-ratio: 16/9;
+}
+
+/* Два изображения */
+.double {
+  grid-template-columns: 1fr 1fr;
+}
+
+.double .imageContainer {
+  aspect-ratio: 4/3;
+}
+
+/* Три изображения */
+.triple {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+
+.triple .imageContainer:nth-child(1),
+.triple .imageContainer:nth-child(2) {
+  aspect-ratio: 4/3;
+}
+
+.triple .imageContainer:nth-child(3) {
+  grid-column: span 2;
+  aspect-ratio: 16/8;
+}
+
+/* Четыре изображения */
+.quad {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+
+.quad .imageContainer {
+  aspect-ratio: 4/3;
+}
+
+/* Пять изображений */
+.penta {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "a c"
+    "b c"
+    "d e";
+}
+
+.penta .imageContainer:nth-child(1) {
+  grid-area: a;
+  aspect-ratio: 4/3;
+}
+.penta .imageContainer:nth-child(2) {
+  grid-area: b;
+  aspect-ratio: 4/3;
+}
+.penta .imageContainer:nth-child(3) {
+  grid-area: c;
+}
+.penta .imageContainer:nth-child(4) {
+  grid-area: d;
+  aspect-ratio: 4/3;
+}
+.penta .imageContainer:nth-child(5) {
+  grid-area: e;
+  aspect-ratio: 4/3;
+}
+
+/* Шесть изображений */
+.hexa {
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "a a d e"
+    "a a f f"
+    "b c f f";
+}
+
+.hexa .imageContainer:nth-child(1) {
+  grid-area: a;
+  aspect-ratio: 4/3;
+}
+.hexa .imageContainer:nth-child(2) {
+  grid-area: b;
+  aspect-ratio: 4/3;
+}
+.hexa .imageContainer:nth-child(3) {
+  grid-area: c;
+  aspect-ratio: 4/3;
+}
+.hexa .imageContainer:nth-child(4) {
+  grid-area: d;
+  aspect-ratio: 4/3;
+}
+.hexa .imageContainer:nth-child(5) {
+  grid-area: e;
+  aspect-ratio: 4/3;
+}
+.hexa .imageContainer:nth-child(6) {
+  grid-area: f;
+  aspect-ratio: 4/3;
+}
+
+/* Для больше 6 изображений - базовая сетка 2x2 */
+.defaultGrid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr !important;
+  }
+
+  .imageContainer {
+    aspect-ratio: 16/9 !important;
+    grid-area: auto !important;
+  }
+}
