@@ -46,3 +46,9 @@ h2 {
   font-size: 44px;
   font-weight: 600;
 }
+
+.szh-accordion__item--expanded {
+  .chevron {
+    transform: rotate(180deg);
+  }
+}

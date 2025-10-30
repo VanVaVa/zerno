@@ -4,7 +4,7 @@ const MainPage = () => (
   <div className={styles.wrapper}>
     <section className={styles.card}>
       <h1>
-        Мы — Рекламное агентство «<span>ЗЕРНО</span>»
+        Мы — Рекламное агентство «<strong>ЗЕРНО</strong>»
       </h1>
       <p>
         Создаём смелые идеи, превращаем их в яркие проекты и доводим до

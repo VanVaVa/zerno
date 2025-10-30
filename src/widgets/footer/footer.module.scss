@@ -13,12 +13,20 @@
   h2 {
     font-size: 22px;
   }
+
+  @media (max-width: 870px) {
+    padding-inline: 43px;
+  }
 }
 
 .footerContent {
   display: flex;
   justify-content: space-between;
   width: 100%;
+
+  @media (max-width: 1090px) {
+    display: none;
+  }
 }
 
 .services {
@@ -41,6 +49,8 @@
   display: flex;
   justify-content: space-between;
   width: 640px;
+  margin-right: 40px;
+  gap: 30px;
 }
 
 .contacts {
@@ -48,13 +58,13 @@
     font-size: 28px;
     margin-bottom: 28px;
   }
+}
 
-  address {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    font-style: normal;
-  }
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  font-style: normal;
 }
 
 .contact {
@@ -86,4 +96,74 @@
   a {
     color: #525252;
   }
+
+  @media (max-width: 1225px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.footerContentSmall {
+  width: 100%;
+}
+
+.list {
+  margin-bottom: 31px;
+}
+
+.footerContentSmall {
+  @media (min-width: 1090px) {
+    display: none;
+  }
+}
+
+.item {
+  width: 100%;
+  border-bottom: 1px solid #000;
+  padding-bottom: 15px;
+  padding-inline: 22px;
+  transition: all 0.3s;
+}
+
+.itemContent {
+  margin-top: 18px;
+}
+
+.itemBtn {
+  padding-top: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: transparent;
+  border: none;
+
+  @media (max-width: 650px) {
+    font-size: 16px;
+  }
+}
+
+.chevron {
+  transition: transform 0.25s cubic-bezier(0, 0, 0, 1);
+}
+
+.itemBtnExpanded .chevron {
+  transform: rotate(180deg);
+}
+
+.itemHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.small {
+  padding-inline: 22px;
 }
