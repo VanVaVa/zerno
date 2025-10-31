@@ -13,20 +13,24 @@ const AboutPage = () => (
           что позволяет работать без посредников и выполнять проекты любой
           сложности.
         </p>
-        <Image
-          src="/images/about/about_2.png"
-          width={578}
-          height={330}
-          alt=""
-        />
+        <div className={styles.imageContainer}>
+          <Image
+            src="/images/about/about_2.png"
+            fill
+            objectFit="cover"
+            alt=""
+          />
+        </div>
       </div>
       <div className={styles.section}>
-        <Image
-          src="/images/about/about_1.png"
-          width={578}
-          height={330}
-          alt=""
-        />
+        <div className={styles.imageContainer}>
+          <Image
+            src="/images/about/about_1.png"
+            alt=""
+            fill
+            objectFit="cover"
+          />
+        </div>
         <p>
           Мы — команда специалистов с опытом более 10 лет в рекламе и
           производстве. У нас есть собственные цеха и современное оборудование,

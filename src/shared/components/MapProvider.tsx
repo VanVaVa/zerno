@@ -11,7 +11,7 @@ const MapProvider = () => (
           center: [57.844773, 61.972214],
           zoom: 4.5,
         }}
-        width={1600}
+        width="min(calc(100vw - 40px), 1600px)"
         height={698}
       >
         <Placemark geometry={[59.947343, 30.30455]} />

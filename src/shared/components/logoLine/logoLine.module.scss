@@ -3,8 +3,10 @@
   display: flex;
   gap: 45px;
   align-items: center;
+  justify-content: start;
   animation: 8s linear infinite normal move;
-  min-width: 200vw;
+  min-width: 2777px;
+  margin-inline: -20px;
 
   &[data-direction="left"] {
     animation-direction: reverse;
@@ -12,7 +14,7 @@
 
   @keyframes move {
     from {
-      translate: -726px 0px;
+      translate: -938px 0px;
     }
 
     to {
@@ -27,7 +29,7 @@
   gap: 48px;
   align-items: center;
   animation: 2s linear infinite normal move;
-  min-width: 200vw;
+  min-width: 2779px;
   background-color: #6cbaff;
   font-size: 22px;
 
@@ -37,7 +39,7 @@
 
   @keyframes move {
     from {
-      translate: -173px 0px;
+      translate: -725px 0px;
     }
 
     to {

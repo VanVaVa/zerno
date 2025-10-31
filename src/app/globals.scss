@@ -52,3 +52,13 @@ h2 {
     transform: rotate(180deg);
   }
 }
+
+@media (max-width: 550px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  body {
+    font-size: 12px;
+  }
+}
