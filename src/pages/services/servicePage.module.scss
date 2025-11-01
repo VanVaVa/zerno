@@ -21,4 +21,13 @@
   grid-template-columns: repeat(4, 1fr);
   column-gap: 42px;
   row-gap: 32px;
+
+  @media (max-width: 1430px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 1050px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
 }

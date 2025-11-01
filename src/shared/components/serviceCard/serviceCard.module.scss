@@ -22,4 +22,14 @@
   h2 {
     font-size: 24px;
   }
+
+  @media (max-width: 711px) {
+    width: 40vw;
+    aspect-ratio: 162/207;
+    height: auto;
+
+    h2 {
+      font-size: 14px;
+    }
+  }
 }
