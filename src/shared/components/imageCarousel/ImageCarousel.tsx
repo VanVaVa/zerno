@@ -25,11 +25,11 @@ const ImageCarousel: FC<ImageCarouselProps> = ({ images }) => {
     centerPadding: "0",
     responsive: [
       {
-        breakpoint: 768, // мобильные устройства
+        breakpoint: 905,
         settings: {
           slidesToShow: 1,
           centerMode: true,
-          centerPadding: "60px", // центрирование с фиксированной шириной
+          centerPadding: "60px",
         },
       },
     ],

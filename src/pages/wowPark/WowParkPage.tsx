@@ -26,8 +26,8 @@ const WowParkPage = () => (
         <div>
           <Image
             src="/images/wow_park/zont.svg"
-            width={82}
-            height={82}
+            layout="fill"
+            objectFit="contain"
             alt=""
           />
         </div>
@@ -36,8 +36,8 @@ const WowParkPage = () => (
         <div>
           <Image
             src="/images/wow_park/bubbles.svg"
-            width={82}
-            height={82}
+            layout="fill"
+            objectFit="contain"
             alt=""
           />
         </div>
@@ -57,8 +57,8 @@ const WowParkPage = () => (
         <div>
           <Image
             src="/images/wow_park/puzzle.svg"
-            width={82}
-            height={82}
+            layout="fill"
+            objectFit="contain"
             alt=""
           />
         </div>

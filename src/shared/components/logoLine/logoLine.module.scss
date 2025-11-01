@@ -14,7 +14,7 @@
 
   @keyframes move {
     from {
-      translate: -938px 0px;
+      translate: -725px 0px;
     }
 
     to {
@@ -23,23 +23,23 @@
   }
 }
 
-.wrapper_logo {
+.wrapperLogo {
   padding-block: 16px;
   display: flex;
   gap: 48px;
   align-items: center;
-  animation: 2s linear infinite normal move;
+  animation: 2s linear infinite normal move-wow;
   min-width: 2779px;
-  background-color: #6cbaff;
   font-size: 22px;
+  background-color: #6cbaff;
 
   &[data-direction="left"] {
     animation-direction: reverse;
   }
 
-  @keyframes move {
+  @keyframes move-wow {
     from {
-      translate: -725px 0px;
+      translate: -172px 0px;
     }
 
     to {
