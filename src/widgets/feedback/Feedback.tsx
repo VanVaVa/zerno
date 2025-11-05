@@ -4,6 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useState, useRef } from "react";
 import styles from "./feedback.module.scss";
+import { useContacts } from "@/features/contacts/hooks/use-contacts";
 
 const Feedback = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -13,6 +14,7 @@ const Feedback = () => {
   const [question, setQuestion] = useState<string>("");
   const [agree, setAgree] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const { contacts, loadingContacts, errorContacts } = useContacts();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -39,35 +41,37 @@ const Feedback = () => {
     // Объединяем телефон и вопрос в одно поле text, как в примере
     formData.append("text", `Телефон: ${phone}\nВопрос: ${question}`);
 
-    try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/message/MisterDeterminator@yandex.ru`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "Access-Control-Allow-Origin": "*",
-          },
+    if (!loadingContacts) {
+      try {
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/message/${contacts.email}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        );
+
+        setMessage("Заявка отправлена успешно");
+
+        // Очистка формы после успешной отправки
+        setName("");
+        setEmail("");
+        setPhone("");
+        setQuestion("");
+        setFile(null);
+        setAgree(false);
+
+        // Сброс file input
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
         }
-      );
-
-      setMessage("Заявка отправлена успешно");
-
-      // Очистка формы после успешной отправки
-      setName("");
-      setEmail("");
-      setPhone("");
-      setQuestion("");
-      setFile(null);
-      setAgree(false);
-
-      // Сброс file input
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
+      } catch (error) {
+        setMessage("Произошла ошибка при отправке сообщения.");
+        console.error("Ошибка отправки формы:", error);
       }
-    } catch (error) {
-      setMessage("Произошла ошибка при отправке сообщения.");
-      console.error("Ошибка отправки формы:", error);
     }
   };
 
@@ -139,7 +143,9 @@ const Feedback = () => {
                 данных
               </label>
             </div>
-            <button type="submit">Отправить</button>
+            <button type="submit" disabled={loadingContacts}>
+              Отправить
+            </button>
           </div>
 
           {/* Сообщение о статусе отправки */}
