@@ -4,6 +4,7 @@ import "./globals.scss";
 import "react-photo-view/dist/react-photo-view.css";
 import Header from "@/widgets/header/Header";
 import Footer from "@/widgets/footer/Footer";
+import { Providers } from "./providers";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -23,9 +24,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={`${montserrat.variable}`}>
-        <Header />
-        <main style={{ paddingTop: 106 }}>{children}</main>
-        <Footer />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

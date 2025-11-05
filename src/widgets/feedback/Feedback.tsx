@@ -3,7 +3,14 @@ import styles from "./feedback.module.scss";
 
 const Feedback = () => (
   <div className={styles.wrapper} id="feedback">
-    <Image src="/images/feedback.png" alt="" width={800} height={656} />
+    <div className={styles.imageWrapper}>
+      <Image
+        src="/images/feedback.png"
+        alt=""
+        layout="fill"
+        objectFit="cover"
+      />
+    </div>
     <div className={styles.content}>
       <h1>Оставьте заявку уже сейчас и мы свяжемся с вами</h1>
       <form>

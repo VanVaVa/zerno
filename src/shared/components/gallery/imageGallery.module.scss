@@ -5,12 +5,22 @@
   grid-template-columns: repeat(2, 1fr);
   column-gap: 60px;
   row-gap: 90px;
+
+  @media (max-width: 870px) {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
 }
 
 .figure {
   position: relative;
-  width: 770px;
-  height: 520px;
+  width: min(770px, 45vw);
+  // height: 520px;
+  aspect-ratio: 77/52;
+
+  @media (max-width: 870px) {
+    width: 90vw;
+  }
 
   div {
     position: absolute;
