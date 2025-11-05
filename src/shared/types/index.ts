@@ -16,7 +16,7 @@ export interface AuthContextType {
 
 // Типы для секций контента - наследуем от DocumentData для совместимости
 export interface SectionContent extends DocumentData {
-  [key: string]: string | number | boolean | null | undefined;
+  [key: string]: string | number | boolean | null | undefined | unknown[];
 }
 
 export interface SectionConfig {
@@ -51,4 +51,87 @@ export interface NotificationState {
   open: boolean;
   message: string;
   severity: "success" | "error" | "warning" | "info";
+}
+
+// Добавляем типы для карты и проектов
+export interface MapProject {
+  id: string;
+  name: string;
+  coordinates: [number, number]; // [lng, lat]
+  description?: string;
+  address?: string;
+  type?: "commercial" | "residential" | "public";
+  status?: "completed" | "in-progress" | "planned";
+}
+
+export interface MapSectionContent extends SectionContent {
+  center?: [number, number];
+  zoom?: number;
+  projects: MapProject[];
+}
+
+export interface CompanyBlock {
+  id: string;
+  text: string;
+  imageUrl?: string;
+  order: number;
+}
+
+export interface CompanySectionContent {
+  blocks: CompanyBlock[];
+}
+
+// Типы для услуг
+export interface ServiceFeature {
+  id: string;
+  title: string;
+  text: string;
+  iconName: string;
+}
+
+export interface ServiceContent {
+  id: string;
+  name: string; // Название услуги
+  subtitle: string; // Подзаголовок услуги
+  headerTitle: string; // Заголовок услуги
+
+  // Левая часть
+  leftParagraph1: string;
+  leftParagraph2: string;
+  leftList: string[];
+  leftParagraph3: string;
+
+  // Правая часть - коллекция особенностей
+  features: ServiceFeature[];
+
+  // Галерея изображений
+  gallery: string[];
+}
+
+export interface ServicesSectionContent {
+  services: ServiceContent[];
+}
+
+// Типы для галереи изображений
+export interface GalleryItem {
+  id: string;
+  imageUrl: string;
+  caption: string;
+}
+
+export interface GallerySectionContent {
+  items: GalleryItem[];
+}
+
+export interface WowParkContent {
+  images: string[];
+}
+
+// Типы для контактов
+export interface ContactsContent {
+  phone: string;
+  email: string;
+  address: string;
+  mapLink: string;
+  website: string;
 }

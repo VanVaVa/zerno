@@ -12,7 +12,13 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <Link href="/" onClick={() => setIsMenuOpened(false)}>
-        <Image src="/images/logo.svg" width={174} height={50} alt="зерно" />
+        <Image
+          src="/images/logo.svg"
+          width={174}
+          height={50}
+          alt="зерно"
+          priority
+        />
       </Link>
       <nav>
         <ul className={styles.list}>

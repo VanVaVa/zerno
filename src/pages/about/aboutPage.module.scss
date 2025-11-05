@@ -40,8 +40,10 @@
   }
 }
 
-.section:last-of-type {
+.section:nth-of-type(even) {
   flex-wrap: wrap-reverse;
+  flex-direction: row-reverse;
+  text-align: end;
 }
 
 .subtitle {

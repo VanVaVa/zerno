@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.scss";
 import "react-photo-view/dist/react-photo-view.css";
-import Header from "@/widgets/header/Header";
-import Footer from "@/widgets/footer/Footer";
 import { Providers } from "./providers";
 
 const montserrat = Montserrat({

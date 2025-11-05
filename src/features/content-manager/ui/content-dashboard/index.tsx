@@ -12,21 +12,35 @@ import {
 import { Edit, Preview } from "@mui/icons-material";
 
 const sectionsConfig = {
-  hero: {
-    title: "Главный баннер",
-    description: "Редактирование заголовка и описания",
-  },
-  features: {
-    title: "Преимущества",
-    description: "Управление списком преимуществ",
-  },
-  about: {
+  company: {
     title: "О компании",
     description: "Информация о компании",
+    link: "about-us",
   },
   contacts: {
     title: "Контакты",
     description: "Контактная информация",
+    link: "feedback",
+  },
+  map: {
+    title: "Точки на карте",
+    description: "Управление точками проектов на карте",
+    link: "about-us",
+  },
+  services: {
+    title: "Услуги",
+    description: "Управление услугами",
+    link: "services",
+  },
+  gallery: {
+    title: "Портфолио",
+    description: "Управление портфолио",
+    link: "portfolio",
+  },
+  "wow-park": {
+    title: "Wow-парк",
+    description: "Управление изображениями",
+    link: "wow-park",
   },
 } as const;
 
@@ -64,7 +78,7 @@ export function ContentDashboard() {
               <Button
                 size="small"
                 startIcon={<Preview />}
-                onClick={() => router.push("/")}
+                onClick={() => router.push(`/${config.link}`)}
               >
                 Посмотреть
               </Button>

@@ -7,14 +7,7 @@ const WowParkPage = () => (
   <div className={styles.wrapper}>
     <WowLine />
     <div style={{ display: "block" }}>
-      <ImageCarousel
-        images={[
-          "/images/service_1_1.png",
-          "/images/service_1_2.png",
-          "/images/service_1_1.png",
-          "/images/service_1_2.png",
-        ]}
-      />
+      <ImageCarousel />
     </div>
     <div className={styles.articleWrapper}>
       <article className={styles.article}>

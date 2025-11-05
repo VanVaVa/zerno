@@ -1,103 +1,93 @@
+"use client";
+
 import Image from "next/image";
 import { FC } from "react";
 import styles from "./singleServicePage.module.scss";
 import Tiles from "@/shared/components/tiles/Tiles";
 import Feedback from "@/widgets/feedback/Feedback";
+import { useServices } from "@/features/services/hooks/use-services";
+import { Typography } from "@mui/material";
+import { Container } from "@mui/system";
+import { IconName, getIconComponent } from "@/features/services/lib/icons";
 
 const SingleServicePage: FC<{ serviceId: string }> = ({ serviceId }) => {
+  const { services, loading, error } = useServices();
+
+  const service = services.find((el) => el.id === serviceId);
+
+  if (loading) {
+    return (
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Typography textAlign="center">Загрузка услуг...</Typography>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Typography color="error" textAlign="center">
+          Ошибка загрузки: {error}
+        </Typography>
+      </Container>
+    );
+  }
+
+  if (!service)
+    return (
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Typography textAlign="center">Услуга не найдена</Typography>
+      </Container>
+    );
+
   return (
     <div>
       <div className={styles.headerImageWrapper}>
         <Image
-          src="/images/service_1_1.png"
+          src={service.gallery[0]}
           layout="fill"
           objectFit="cover"
           alt=""
         />
         <div>
-          <h2>
-            Планируете участие в бизнес-мероприятиях?
-            <br /> <strong>Доверьте эту задачу нам!</strong>
-          </h2>
-          <h1>Коммерческая застройка выставочных стендов под ключ</h1>
+          <h2>{service.subtitle}</h2>
+          <h1>{service.headerTitle}</h1>
         </div>
       </div>
       <div className={styles.textWrapper}>
         <article className={styles.leftContent}>
-          <p>
-            Мы предлагаем полное решение застройки выставочных стендов и сцен
-            под ключ
-            <br />
-            Аккредитацию мы также можем взять на себя!
-          </p>
+          <p>{service.leftParagraph1}</p>
           <div className={styles.listSection}>
-            <p>
-              Проектирование, разработка дизайна и оформление массовых
-              мероприятий:
-            </p>
+            <p>{service.leftParagraph2}</p>
             <ul>
-              <li>стенды,</li>
-              <li>интерактивы,</li>
-              <li>светодиодные инсталяции,</li>
-              <li>широкоформатная печать, </li>
-              <li>объемные конструкции и т.д.</li>
+              {service.leftList.map((el, idx) => (
+                <li key={idx}>{el}</li>
+              ))}
             </ul>
           </div>
-          <h2>Мы беремся за реализацию даже самых сложных проектов!</h2>
+          <h2>{service.leftParagraph3}</h2>
           <div className={styles.buttonWrapper}>
             <a href="#feedback">Заказать сейчас</a>
           </div>
         </article>
         <article className={styles.rightContent}>
-          <section>
-            <div>
-              <h2>Качественное освещение</h2>
-              <p>
-                Правильно организованное освещение акцентирует привлекающие
-                внимание аспекты продукции и создает уютную атмосферу, благодаря
-                чему посетители охотнее заходит в стенд для более детального
-                ознакомления с товарами.
-              </p>
-            </div>
-            <Image src="/images/light.svg" alt="" width={52} height={52} />
-          </section>
-          <section>
-            <div>
-              <h2>Удобство для сотрудников и гостей</h2>
-              <p>
-                Стандартные выставочные стенды не всегда удобны, особенно если
-                ваш товар является специфическим или крупногабаритным. В таких
-                случаях индивидуальный проект помогает решить возникшие
-                трудности.
-              </p>
-            </div>
-            <Image src="/images/touch.svg" alt="" width={52} height={52} />
-          </section>
-          <section>
-            <div>
-              <h2>Уникальный дизайн</h2>
-              <p>
-                Проект может быть выполнен в любом стиле — от хай-тека до
-                старинного. Все зависит от типа продукции, фирменного стиля
-                компании и требований заказчика. Мы изготовим стенды любой
-                сложности и из различных материалов
-              </p>
-            </div>
-            <Image src="/images/stars.svg" alt="" width={52} height={52} />
-          </section>
+          {service.features.map((el) => {
+            const IconComponent = getIconComponent(el.iconName as IconName);
+            return (
+              <section key={el.id}>
+                <div>
+                  <h2>{el.title}</h2>
+                  <p>{el.text}</p>
+                </div>
+                <IconComponent sx={{ width: 42, height: 42 }} />
+              </section>
+            );
+          })}
         </article>
       </div>
       <div className={styles.examplesWrapper}>
         <h2>Примеры наших работ</h2>
-        <Tiles
-          images={[
-            "/images/service_1_1.png",
-            "/images/service_1_1.png",
-            "/images/service_1_1.png",
-            "/images/service_1_1.png",
-            "/images/service_1_1.png",
-          ]}
-        />
+        <Tiles images={service.gallery} />
       </div>
       <Feedback />
     </div>

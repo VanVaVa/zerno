@@ -4,14 +4,13 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./stylesOverride.css";
-import { FC } from "react";
 import styles from "./imageCarousel.module.scss";
+import { useWowPark } from "@/features/wow-park/hooks/use-wow-park";
+import { Typography } from "@mui/material";
+import { Container } from "@mui/system";
 
-interface ImageCarouselProps {
-  images: string[];
-}
-
-const ImageCarousel: FC<ImageCarouselProps> = ({ images }) => {
+const ImageCarousel = () => {
+  const { images, loading, error } = useWowPark();
   const settings = {
     dots: false,
     infinite: true,
@@ -34,6 +33,24 @@ const ImageCarousel: FC<ImageCarouselProps> = ({ images }) => {
       },
     ],
   };
+
+  if (loading) {
+    return (
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Typography textAlign="center">Загрузка Wow-парка...</Typography>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Typography color="error" textAlign="center">
+          Ошибка загрузки: {error}
+        </Typography>
+      </Container>
+    );
+  }
 
   return (
     <div className={styles.carouselWrapper}>

@@ -10,6 +10,7 @@
 
 .headerImageWrapper {
   position: relative;
+  padding-inline: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +38,19 @@
   h1 {
     font-size: 70px;
   }
+
+  @media (max-width: 940px) {
+    height: auto;
+    padding-block: 60px;
+
+    h2 {
+      font-size: 26px;
+    }
+
+    h1 {
+      font-size: 40px;
+    }
+  }
 }
 
 .textWrapper {
@@ -44,6 +58,16 @@
   justify-content: center;
   padding: 101px 106px 91px 247px;
   gap: 170px;
+
+  @media (max-width: 1710px) {
+    flex-wrap: wrap;
+    padding-inline: 100px;
+    gap: 50px;
+  }
+
+  @media (max-width: 680px) {
+    padding-inline: 30px;
+  }
 }
 
 .leftContent {
@@ -54,12 +78,27 @@
   font-size: 28px;
   font-weight: 500;
 
+  @media (max-width: 1710px) {
+    font-size: 18px;
+  }
+
   .listSection {
     margin-inline: -80px;
     padding: 35px 80px;
     border: 4px $color-blue solid;
     border-radius: 30px;
     font-size: 32px;
+
+    @media (max-width: 1710px) {
+      font-size: 20px;
+      padding: 25px 50px;
+      margin-inline: -50px;
+    }
+
+    @media (max-width: 680px) {
+      padding-inline: 30px;
+      margin-inline: 0;
+    }
   }
 
   .buttonWrapper {
@@ -77,9 +116,14 @@
     cursor: pointer;
     transition: opacity 0.3s;
     font-family: Montserrat, sans-serif;
+    text-align: center;
 
     &:hover {
       opacity: 0.8;
+    }
+
+    @media (max-width: 1710px) {
+      font-size: 24px;
     }
   }
 
@@ -91,6 +135,10 @@
     font-size: 36px;
     text-align: center;
     font-weight: 500;
+
+    @media (max-width: 1710px) {
+      font-size: 24px;
+    }
   }
 }
 
@@ -111,6 +159,18 @@
       font-size: 28px;
       margin-bottom: 9px;
     }
+
+    @media (max-width: 1710px) {
+      font-size: 16px;
+
+      h2 {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      padding: 20px;
+    }
   }
 
   section:nth-of-type(odd) {
@@ -130,5 +190,14 @@
   h2 {
     font-size: 44px;
     font-weight: 500;
+    text-align: center;
+  }
+
+  @media (max-width: 830px) {
+    padding-inline: 30px;
+
+    h2 {
+      font-size: 32px;
+    }
   }
 }

@@ -17,7 +17,7 @@ main {
 body {
   color: #000;
   background: #fff;
-  font-family: Montserrat, sans-serif;
+  font-family: var(--font-montserrat);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 20px;
