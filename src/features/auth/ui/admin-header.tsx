@@ -13,7 +13,7 @@ export function AdminHeader() {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Админка лендинга
+          Панель администратора
         </Typography>
         <Box display="flex" alignItems="center" gap={2}>
           <Button

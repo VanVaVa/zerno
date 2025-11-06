@@ -134,26 +134,20 @@ const Footer = () => {
             <address className={styles.address}>
               <div className={styles.contact}>
                 <Image src="/images/phone.svg" width={34} height={34} alt="" />
-                <Link href="tel:89139035210">+7 913 903 5210</Link>
+                <Link href={`tel:${contacts.phone}`}>{contacts.phone}</Link>
               </div>
               <div className={styles.contact}>
                 <Image src="/images/email.svg" width={34} height={34} alt="" />
-                <Link href="mailto:89139035210@mail.ru">
-                  89139035210@mail.ru
-                </Link>
+                <Link href={`mailto:${contacts.email}`}>{contacts.email}</Link>
               </div>
               <div className={styles.contact}>
                 <Image src="/images/room.svg" width={34} height={34} alt="" />
-                <Link href="https://yandex.ru/maps/org/umny_muzey/154032104008/?ll=82.922091%2C54.960711&z=16">
-                  г. Новосибирск,
-                  <br />
-                  ул. Бетонная 14, стр.2
-                </Link>
+                <Link href={contacts.mapLink}>{contacts.address}</Link>
               </div>
               <div className={styles.contact}>
                 <Image src="/images/web.svg" width={34} height={34} alt="" />
                 <div className={styles.webLink}>
-                  <Link href="https://example.com">https://example.com</Link>
+                  <Link href={contacts.website}>{contacts.website}</Link>
                   <span>Официальный сайт</span>
                 </div>
               </div>
@@ -184,12 +178,11 @@ const Footer = () => {
             }}
           >
             <ul className={styles.services}>
-              <li>Выставочные стенды и сцены</li>
-              <li>Выставочные стенды и сцены</li>
-              <li>Выставочные стенды и сцены</li>
-              <li>Выставочные стенды и сцены</li>
-              <li>Выставочные стенды и сцены</li>
-              <li>Выставочные стенды и сцены</li>
+              {services.map((el) => (
+                <li key={el.id}>
+                  <Link href={`/services/${el.id}`}>{el.name}</Link>
+                </li>
+              ))}
             </ul>
           </AccordionItem>
         </Accordion>

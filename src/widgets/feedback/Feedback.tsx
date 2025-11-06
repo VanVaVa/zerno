@@ -14,7 +14,7 @@ const Feedback = () => {
   const [question, setQuestion] = useState<string>("");
   const [agree, setAgree] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const { contacts, loadingContacts, errorContacts } = useContacts();
+  const { contacts, loadingContacts } = useContacts();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -38,7 +38,6 @@ const Feedback = () => {
     }
     formData.append("name", name);
     formData.append("email", email);
-    // Объединяем телефон и вопрос в одно поле text, как в примере
     formData.append("text", `Телефон: ${phone}\nВопрос: ${question}`);
 
     if (!loadingContacts) {
