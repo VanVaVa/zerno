@@ -7,11 +7,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "*.yandex.ru",
+        hostname: "*",
       },
       {
-        protocol: "https",
-        hostname: "sun9-86.userapi.com",
+        protocol: "http",
+        hostname: "*",
       },
     ],
   },

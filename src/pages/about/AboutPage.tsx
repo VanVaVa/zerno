@@ -40,7 +40,7 @@ const AboutPage = () => {
             <div className={styles.section} key={el.id}>
               <p
                 style={{
-                  textAlign: !el.imageUrl ? "center" : "unset",
+                  textAlign: !el.imageUrl ? "center" : "inherit",
                 }}
               >
                 {el.text}
