@@ -35,7 +35,7 @@ const ImageGallery = () => {
           <figure key={item.id} className={styles.figure}>
             <PhotoView src={item.imageUrl}>
               <Image
-                src={item.imageUrl}
+                src={decodeURIComponent(item.imageUrl)}
                 alt=""
                 objectFit="cover"
                 layout="fill"

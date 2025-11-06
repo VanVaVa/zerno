@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   reactStrictMode: true,
   swcMinify: true,
   images: {
@@ -7,6 +8,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "*.yandex.ru",
+      },
+      {
+        protocol: "https",
+        hostname: "sun9-86.userapi.com",
       },
     ],
   },

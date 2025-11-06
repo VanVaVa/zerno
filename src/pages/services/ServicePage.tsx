@@ -42,7 +42,7 @@ const ServicePage = () => {
           <ServiceCard
             key={el.id}
             title={el.name}
-            backgroundUrl={el.gallery[0]}
+            backgroundUrl={decodeURIComponent(el.gallery[0])}
             href={el.id}
           />
         ))}

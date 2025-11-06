@@ -37,7 +37,7 @@ const Tiles: React.FC<TilesProps> = ({ images }) => {
           data-index={index}
         >
           <Image
-            src={src}
+            src={decodeURIComponent(src)}
             alt={`Gallery image ${index + 1}`}
             fill
             className={styles.image}

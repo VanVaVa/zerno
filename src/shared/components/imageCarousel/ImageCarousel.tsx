@@ -58,7 +58,12 @@ const ImageCarousel = () => {
         <Slider {...settings}>
           {images.map((el, idx) => (
             <div className={styles.imageWrapper} key={idx}>
-              <Image src={el} alt="" layout="fill" objectFit="cover" />
+              <Image
+                src={decodeURIComponent(el)}
+                alt=""
+                layout="fill"
+                objectFit="cover"
+              />
             </div>
           ))}
         </Slider>
