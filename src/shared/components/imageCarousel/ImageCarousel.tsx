@@ -1,9 +1,8 @@
 "use client";
 import Image from "next/image";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "./stylesOverride.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 import styles from "./imageCarousel.module.scss";
 import { useWowPark } from "@/features/wow-park/hooks/use-wow-park";
 import { Typography } from "@mui/material";
@@ -11,27 +10,27 @@ import { Container } from "@mui/system";
 
 const ImageCarousel = () => {
   const { images, loading, error } = useWowPark();
-  const settings = {
-    dots: false,
-    infinite: true,
+
+  const swiperParams = {
+    modules: [Autoplay],
+    slidesPerView: 1.2,
+    centeredSlides: true,
+    spaceBetween: 20,
+    rewind: true,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
     speed: 1000,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    cssEase: "ease",
-    centerMode: true,
-    centerPadding: "0",
-    responsive: [
-      {
-        breakpoint: 905,
-        settings: {
-          slidesToShow: 1,
-          centerMode: true,
-          centerPadding: "60px",
-        },
+    loop: true, // Включаем бесконечную цикличность
+    breakpoints: {
+      906: {
+        slidesPerView: 3,
+        spaceBetween: 20,
+        centeredSlides: false,
+        loop: true,
       },
-    ],
+    },
   };
 
   if (loading) {
@@ -54,20 +53,25 @@ const ImageCarousel = () => {
 
   return (
     <div className={styles.carouselWrapper}>
-      <div>
-        <Slider {...settings}>
-          {images.map((el, idx) => (
-            <div className={styles.imageWrapper} key={idx}>
+      <Swiper {...swiperParams} className={styles.swiperContainer}>
+        {images.map((el, idx) => (
+          <SwiperSlide key={idx} className={styles.swiperSlide}>
+            <div className={styles.imageWrapper}>
               <Image
                 src={decodeURIComponent(el)}
-                alt=""
-                layout="fill"
-                objectFit="cover"
+                alt={`Wow-park image ${idx + 1}`}
+                fill
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "center",
+                }}
+                sizes="(max-width: 905px) 100vw, 30vw"
+                priority={idx === 0}
               />
             </div>
-          ))}
-        </Slider>
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 };
