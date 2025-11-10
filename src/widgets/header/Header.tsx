@@ -48,8 +48,15 @@ const Header = () => {
           <ul className={styles.menuList}>
             {pages.map((el) => (
               <li key={el.link} onClick={() => setIsMenuOpened(false)}>
-                <Link href={el.link}>{el.name}</Link>
-                <Image src="/images/arrow.svg" alt="" width={21} height={17} />
+                <Link href={el.link}>
+                  {el.name}
+                  <Image
+                    src="/images/arrow.svg"
+                    alt=""
+                    width={21}
+                    height={17}
+                  />
+                </Link>
               </li>
             ))}
           </ul>

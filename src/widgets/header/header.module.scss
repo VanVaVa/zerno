@@ -84,8 +84,12 @@
     border-bottom: 1px $color-black solid;
     font-size: 22px;
     font-weight: 500;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+    a {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 }

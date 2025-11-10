@@ -3,17 +3,14 @@
 .card {
   width: 313px;
   height: 402px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #b1c6d8;
   border-radius: 20px;
-  padding: 52px;
   text-align: center;
   color: $color-white;
   background-position: center center;
   background-size: cover;
   transition: all 0.3s;
+  overflow: hidden;
 
   &:hover {
     translate: 0 -10px;
@@ -32,4 +29,13 @@
       font-size: 14px;
     }
   }
+}
+
+.background {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 52px;
 }

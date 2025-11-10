@@ -14,7 +14,9 @@ const ServiceCard: FC<ServiceCardProps> = ({ title, backgroundUrl, href }) => (
     className={styles.card}
     style={{ backgroundImage: `url(${backgroundUrl})` }}
   >
-    <h2>{title}</h2>
+    <div className={styles.background}>
+      <h2>{title}</h2>
+    </div>
   </Link>
 );
 

@@ -22,7 +22,7 @@ const ImageCarousel = () => {
       disableOnInteraction: false,
     },
     speed: 1000,
-    loop: true, // Включаем бесконечную цикличность
+    loop: true,
     breakpoints: {
       906: {
         slidesPerView: 3,
