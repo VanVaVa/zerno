@@ -134,6 +134,7 @@
 @media (max-width: 768px) {
   .gallery {
     grid-template-columns: 1fr !important;
+    grid-template-areas: none !important;
   }
 
   .imageContainer {
