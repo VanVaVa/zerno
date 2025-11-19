@@ -16,85 +16,164 @@ import {
   DialogContent,
   DialogActions,
   Grid,
+  Chip,
+  IconButton,
 } from "@mui/material";
-import { Delete, Add, Edit, Image as MuiImage } from "@mui/icons-material";
+import {
+  Delete,
+  Add,
+  Edit,
+  Image as MuiImage,
+  Close,
+} from "@mui/icons-material";
 import { useGallery } from "@/features/gallery/hooks/use-gallery";
 import { GalleryItem } from "@/shared/types";
 import Image from "next/image";
 
+interface FormItem {
+  imageUrl: string[];
+  caption: string;
+}
+
 export default function GalleryEditorPage() {
-  const { items, loading, error, addItem, updateItem, deleteItem } =
+  const { items, loading, error, addMultipleItems, updateItem, deleteItem } =
     useGallery();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<GalleryItem | null>(null);
   const [message, setMessage] = useState("");
 
-  // Поля формы
-  const [imageUrl, setImageUrl] = useState("");
-  const [caption, setCaption] = useState("");
+  const [formItems, setFormItems] = useState<FormItem[]>([
+    { imageUrl: [""], caption: "" },
+  ]);
 
   const resetForm = () => {
-    setImageUrl("");
-    setCaption("");
+    setFormItems([{ imageUrl: [""], caption: "" }]);
   };
 
-  const handleAddItem = async () => {
-    if (!imageUrl.trim()) {
-      setMessage("Введите ссылку на изображение");
+  const addFormField = () => {
+    setFormItems([...formItems, { imageUrl: [""], caption: "" }]);
+  };
+
+  const removeFormField = (index: number) => {
+    if (formItems.length > 1) {
+      setFormItems(formItems.filter((_, i) => i !== index));
+    }
+  };
+
+  const addImageUrlField = (formIndex: number) => {
+    const updatedItems = [...formItems];
+    updatedItems[formIndex].imageUrl.push("");
+    setFormItems(updatedItems);
+  };
+
+  const removeImageUrlField = (formIndex: number, urlIndex: number) => {
+    const updatedItems = [...formItems];
+    if (updatedItems[formIndex].imageUrl.length > 1) {
+      updatedItems[formIndex].imageUrl = updatedItems[
+        formIndex
+      ].imageUrl.filter((_, i) => i !== urlIndex);
+      setFormItems(updatedItems);
+    }
+  };
+
+  const updateFormField = (
+    formIndex: number,
+    field: keyof Omit<FormItem, "imageUrl">,
+    value: string
+  ) => {
+    const updatedItems = [...formItems];
+    updatedItems[formIndex] = { ...updatedItems[formIndex], [field]: value };
+    setFormItems(updatedItems);
+  };
+
+  const updateImageUrl = (
+    formIndex: number,
+    urlIndex: number,
+    value: string
+  ) => {
+    const updatedItems = [...formItems];
+    updatedItems[formIndex].imageUrl[urlIndex] = value;
+    setFormItems(updatedItems);
+  };
+
+  const handleAddItems = async () => {
+    const itemsToAdd = formItems
+      .map((item) => ({
+        imageUrl: item.imageUrl.filter((url) => url.trim() !== ""),
+        caption: item.caption.trim(),
+      }))
+      .filter((item) => item.imageUrl.length > 0);
+
+    if (itemsToAdd.length === 0) {
+      setMessage("Добавьте хотя бы одно изображение");
       setTimeout(() => setMessage(""), 3000);
       return;
     }
 
-    const result = await addItem({
-      imageUrl: imageUrl.trim(),
-      caption: caption.trim(),
-    });
+    setMessage("Добавление изображений...");
+
+    const result = await addMultipleItems(itemsToAdd);
 
     if (result) {
-      setMessage("Изображение добавлено!");
+      setMessage(`Успешно добавлено ${result.length} элементов галереи`);
       resetForm();
       setDialogOpen(false);
     } else {
-      setMessage("Ошибка при добавлении изображения");
+      setMessage("Ошибка при добавлении элементов галереи");
     }
     setTimeout(() => setMessage(""), 3000);
   };
 
   const handleEditItem = (item: GalleryItem) => {
     setEditingItem(item);
-    setImageUrl(item.imageUrl);
-    setCaption(item.caption);
+    setFormItems([{ imageUrl: item.imageUrl, caption: item.caption }]);
     setDialogOpen(true);
   };
 
   const handleUpdateItem = async () => {
-    if (!editingItem || !imageUrl.trim()) return;
+    if (
+      !editingItem ||
+      formItems[0].imageUrl.filter((url) => url.trim() !== "").length === 0
+    )
+      return;
 
+    setMessage("Обновление...");
     const success = await updateItem(editingItem.id, {
-      imageUrl: imageUrl.trim(),
-      caption: caption.trim(),
+      imageUrl: formItems[0].imageUrl.filter((url) => url.trim() !== ""),
+      caption: formItems[0].caption.trim(),
     });
 
     if (success) {
-      setMessage("Изображение обновлено!");
+      setMessage("Элемент галереи обновлен!");
       setDialogOpen(false);
       setEditingItem(null);
       resetForm();
     } else {
-      setMessage("Ошибка при обновлении изображения");
+      setMessage("Ошибка при обновлении элемента галереи");
     }
     setTimeout(() => setMessage(""), 3000);
   };
 
   const handleDeleteItem = async (id: string) => {
+    setMessage("Удаление...");
     const success = await deleteItem(id);
     if (success) {
-      setMessage("Изображение удалено!");
+      setMessage("Элемент галереи удален!");
     } else {
-      setMessage("Ошибка при удалении изображения");
+      setMessage("Ошибка при удалении элемента галереи");
     }
     setTimeout(() => setMessage(""), 3000);
   };
+
+  const filledItemsCount = formItems.filter((item) =>
+    item.imageUrl.some((url) => url.trim() !== "")
+  ).length;
+
+  const totalImageUrls = formItems.reduce(
+    (acc, item) =>
+      acc + item.imageUrl.filter((url) => url.trim() !== "").length,
+    0
+  );
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -118,7 +197,7 @@ export default function GalleryEditorPage() {
         mb={3}
       >
         <Typography variant="h6">
-          Изображения в галерее ({items.length})
+          Элементы в галерее ({items.length})
         </Typography>
         <Button
           variant="contained"
@@ -130,7 +209,7 @@ export default function GalleryEditorPage() {
           }}
           disabled={loading}
         >
-          Добавить изображение
+          Добавить элементы
         </Button>
       </Box>
 
@@ -140,14 +219,26 @@ export default function GalleryEditorPage() {
         </Typography>
       ) : items.length === 0 ? (
         <Typography color="text.secondary" textAlign="center" py={3}>
-          Изображения не добавлены
+          Элементы не добавлены
         </Typography>
       ) : (
         <Grid container spacing={3}>
           {items.map((item) => (
-            <Grid key={item.id}>
-              <Card>
-                <CardContent>
+            <Grid
+              key={item.id}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <CardContent sx={{ flexGrow: 1 }}>
                   <Box
                     sx={{
                       position: "relative",
@@ -161,28 +252,34 @@ export default function GalleryEditorPage() {
                       justifyContent: "center",
                     }}
                   >
-                    {item.imageUrl ? (
+                    {item.imageUrl[0] ? (
                       <Image
-                        src={item.imageUrl}
+                        src={item.imageUrl[0]}
                         alt={item.caption || "Изображение галереи"}
-                        objectFit="cover"
+                        fill
+                        style={{ objectFit: "cover" }}
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.style.display = "none";
                         }}
-                        layout="fill"
+                        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     ) : (
                       <MuiImage
                         sx={{
                           fontSize: 48,
                           color: "text.secondary",
-                          width: 100,
-                          height: 100,
                         }}
                       />
                     )}
                   </Box>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    Изображений: {item.imageUrl.length}
+                  </Typography>
                   <Typography
                     variant="body2"
                     color="text.secondary"
@@ -222,67 +319,174 @@ export default function GalleryEditorPage() {
         </Grid>
       )}
 
-      {/* Диалог добавления/редактирования изображения */}
       <Dialog
         open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-        maxWidth="sm"
+        onClose={() => !loading && setDialogOpen(false)}
+        maxWidth="md"
         fullWidth
       >
         <DialogTitle>
-          {editingItem ? "Редактировать изображение" : "Добавить изображение"}
+          {editingItem
+            ? "Редактировать элемент галереи"
+            : `Добавить элементы ${
+                filledItemsCount > 0 ? `(${filledItemsCount})` : ""
+              }`}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ mt: 2 }}>
-            <TextField
-              label="Ссылка на изображение *"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              fullWidth
-              margin="normal"
-              required
-              placeholder="https://example.com/image.jpg"
-              helperText="Введите полный URL изображения"
-            />
-            <TextField
-              label="Подпись к изображению"
-              value={caption}
-              onChange={(e) => setCaption(e.target.value)}
-              fullWidth
-              margin="normal"
-              multiline
-              rows={2}
-              placeholder="Описание изображения..."
-              helperText="Необязательное поле"
-            />
-
-            {/* Предпросмотр изображения */}
-            {imageUrl && (
-              <Box sx={{ mt: 2 }}>
-                <Typography variant="subtitle2" gutterBottom>
-                  Предпросмотр:
-                </Typography>
+            {formItems.map((formItem, formIndex) => (
+              <Box
+                key={formIndex}
+                sx={{
+                  mb: 3,
+                  p: 2,
+                  border: "1px solid #e0e0e0",
+                  borderRadius: 1,
+                }}
+              >
                 <Box
-                  sx={{
-                    position: "relative",
-                    height: 200,
-                    borderRadius: 1,
-                    overflow: "hidden",
-                    backgroundColor: "#f5f5f5",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="flex-start"
+                  mb={2}
                 >
-                  <Image
-                    src={imageUrl}
-                    alt="Предпросмотр"
-                    objectFit="contain"
-                    layout="fill"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = "none";
-                    }}
+                  <Typography variant="subtitle1">
+                    Элемент галереи {formIndex + 1}
+                  </Typography>
+                  {!editingItem && formItems.length > 1 && (
+                    <IconButton
+                      size="small"
+                      onClick={() => removeFormField(formIndex)}
+                      color="error"
+                      disabled={loading}
+                    >
+                      <Close />
+                    </IconButton>
+                  )}
+                </Box>
+
+                <Typography variant="subtitle2" gutterBottom>
+                  URL изображений:
+                </Typography>
+
+                {formItem.imageUrl.map((url, urlIndex) => (
+                  <Box
+                    key={urlIndex}
+                    display="flex"
+                    alignItems="flex-start"
+                    gap={1}
+                    mb={1}
+                  >
+                    <TextField
+                      label={`URL изображения ${urlIndex + 1}`}
+                      value={url}
+                      onChange={(e) =>
+                        updateImageUrl(formIndex, urlIndex, e.target.value)
+                      }
+                      fullWidth
+                      margin="normal"
+                      disabled={loading}
+                      placeholder="https://example.com/image.jpg"
+                    />
+                    {formItem.imageUrl.length > 1 && (
+                      <IconButton
+                        size="small"
+                        onClick={() => removeImageUrlField(formIndex, urlIndex)}
+                        color="error"
+                        disabled={loading}
+                        sx={{ mt: 1 }}
+                      >
+                        <Close />
+                      </IconButton>
+                    )}
+                  </Box>
+                ))}
+
+                <Button
+                  startIcon={<Add />}
+                  onClick={() => addImageUrlField(formIndex)}
+                  disabled={loading}
+                  size="small"
+                  sx={{ mb: 2 }}
+                >
+                  Добавить URL
+                </Button>
+
+                <TextField
+                  label="Подпись к элементу"
+                  value={formItem.caption}
+                  onChange={(e) =>
+                    updateFormField(formIndex, "caption", e.target.value)
+                  }
+                  fullWidth
+                  margin="normal"
+                  multiline
+                  rows={2}
+                  disabled={loading}
+                  placeholder="Описание элемента галереи..."
+                  helperText="Необязательное поле"
+                />
+
+                {/* Предпросмотр первого изображения */}
+                {formItem.imageUrl.map((el, idx) => (
+                  <Box sx={{ mt: 2 }} key={idx}>
+                    <Typography variant="subtitle2" gutterBottom>
+                      Предпросмотр {idx + 1} изображения:
+                    </Typography>
+                    <Box
+                      sx={{
+                        position: "relative",
+                        height: 200,
+                        borderRadius: 1,
+                        overflow: "hidden",
+                        backgroundColor: "#f5f5f5",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Image
+                        src={formItem.imageUrl[0]}
+                        alt={`Предпросмотр ${formIndex + 1}`}
+                        fill
+                        style={{ objectFit: "contain" }}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = "none";
+                        }}
+                        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
+            ))}
+
+            {!editingItem && (
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                mt={2}
+              >
+                <Button
+                  startIcon={<Add />}
+                  onClick={addFormField}
+                  variant="outlined"
+                  disabled={loading}
+                >
+                  Добавить еще один элемент
+                </Button>
+                <Box display="flex" gap={1}>
+                  <Chip
+                    label={`Элементов: ${filledItemsCount}`}
+                    color={filledItemsCount > 0 ? "primary" : "default"}
+                    variant="outlined"
+                  />
+                  <Chip
+                    label={`Изображений: ${totalImageUrls}`}
+                    color={totalImageUrls > 0 ? "secondary" : "default"}
+                    variant="outlined"
                   />
                 </Box>
               </Box>
@@ -290,13 +494,36 @@ export default function GalleryEditorPage() {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDialogOpen(false)}>Отмена</Button>
+          <Button onClick={() => setDialogOpen(false)} disabled={loading}>
+            Отмена
+          </Button>
+          {!editingItem && (
+            <Button
+              onClick={addFormField}
+              startIcon={<Add />}
+              disabled={loading}
+            >
+              Еще элемент
+            </Button>
+          )}
           <Button
-            onClick={editingItem ? handleUpdateItem : handleAddItem}
+            onClick={() => {
+              setDialogOpen(false);
+              if (editingItem) handleUpdateItem();
+              else handleAddItems();
+            }}
             variant="contained"
-            disabled={!imageUrl.trim()}
+            disabled={
+              !formItems.some((item) =>
+                item.imageUrl.some((url) => url.trim())
+              ) || loading
+            }
           >
-            {editingItem ? "Сохранить" : "Добавить"}
+            {loading
+              ? "Сохранение..."
+              : editingItem
+              ? "Сохранить"
+              : "Добавить все"}
           </Button>
         </DialogActions>
       </Dialog>

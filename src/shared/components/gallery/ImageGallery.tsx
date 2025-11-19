@@ -3,48 +3,23 @@
 import Image from "next/image";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import styles from "./imageGallery.module.scss";
-import { Typography } from "@mui/material";
-import { Container } from "@mui/system";
-import { useGallery } from "@/features/gallery/hooks/use-gallery";
+import { FC } from "react";
 
-const ImageGallery = () => {
-  const { items, loading, error } = useGallery();
-
-  if (loading) {
-    return (
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Typography textAlign="center">Загрузка галереи...</Typography>
-      </Container>
-    );
-  }
-
-  if (error) {
-    return (
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Typography color="error" textAlign="center">
-          Ошибка загрузки: {error}
-        </Typography>
-      </Container>
-    );
-  }
-
+const ImageGallery: FC<{ urls: string[] }> = ({ urls }) => {
   return (
     <PhotoProvider>
       <div className={styles.wrapper}>
-        {items.map((item) => (
-          <figure key={item.id} className={styles.figure}>
-            <PhotoView src={item.imageUrl}>
+        {urls.map((item, idx) => (
+          <PhotoView src={item} key={idx}>
+            <div className={styles.figure}>
               <Image
-                src={decodeURIComponent(item.imageUrl)}
+                src={decodeURIComponent(item)}
                 alt=""
                 objectFit="cover"
                 layout="fill"
               />
-            </PhotoView>
-            <div>
-              <h2>{item.caption}</h2>
             </div>
-          </figure>
+          </PhotoView>
         ))}
       </div>
     </PhotoProvider>

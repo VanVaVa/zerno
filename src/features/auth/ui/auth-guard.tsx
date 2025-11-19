@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../providers/auth-provider";
 import { useEffect } from "react";
 import { LoadingScreen } from "@/shared/ui/loading-screen";
-// import { LoadingScreen } from "@/shared/ui/loading-screen";
 
 interface AuthGuardProps {
   children: React.ReactNode;

@@ -1,14 +1,17 @@
 "use client";
 
-import styles from "./portfolioPage.module.scss";
+import ImageGallery from "@/shared/components/gallery/ImageGallery";
+import styles from "./styles.module.scss";
+import { FC } from "react";
 import { useGallery } from "@/features/gallery/hooks/use-gallery";
 import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
-import Link from "next/link";
-import Image from "next/image";
 
-const PortfolioPage = () => {
+const PortfolioCategoryPage: FC<{ categoryId: string }> = ({ categoryId }) => {
   const { items, loading, error } = useGallery();
+  const item = items.find((el) => el.id === categoryId);
+
+  if (!item) return null;
 
   if (loading) {
     return (
@@ -30,26 +33,10 @@ const PortfolioPage = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Портфолио</h1>
-      <div className={styles.categoriesWrapper}>
-        {items.map((item) => (
-          <figure key={item.id} className={styles.figure}>
-            <Link href={`portfolio/${item.id}`}>
-              <Image
-                src={decodeURIComponent(item.imageUrl[0])}
-                alt=""
-                objectFit="cover"
-                layout="fill"
-              />
-            </Link>
-            <div>
-              <h2>{item.caption}</h2>
-            </div>
-          </figure>
-        ))}
-      </div>
+      <h1>{item.caption}</h1>
+      <ImageGallery urls={item.imageUrl} />
     </div>
   );
 };
 
-export default PortfolioPage;
+export default PortfolioCategoryPage;

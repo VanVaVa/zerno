@@ -19,7 +19,6 @@ export function useGallery() {
         setItems(response.data.items);
       } else {
         setItems([]);
-        // Создаем начальную запись с пустым массивом
         await firebaseApi.saveDocument("sections", "gallery", { items: [] });
       }
     } catch (err) {
@@ -31,7 +30,6 @@ export function useGallery() {
   };
 
   const saveGallery = async (newItems: GalleryItem[]) => {
-    setLoading(true);
     try {
       await firebaseApi.saveDocument("sections", "gallery", {
         items: newItems,
@@ -42,19 +40,28 @@ export function useGallery() {
       setError("Ошибка сохранения галереи");
       console.error("Error saving gallery:", err);
       return false;
-    } finally {
-      setLoading(false);
     }
   };
 
   const addItem = async (item: Omit<GalleryItem, "id">) => {
     const newItem: GalleryItem = {
       ...item,
-      id: Date.now().toString(),
+      id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
     };
     const newItems = [...items, newItem];
     const success = await saveGallery(newItems);
     return success ? newItem : null;
+  };
+
+  const addMultipleItems = async (newItemsData: Omit<GalleryItem, "id">[]) => {
+    const newItems: GalleryItem[] = newItemsData.map((item) => ({
+      ...item,
+      id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+    }));
+
+    const updatedItems = [...items, ...newItems];
+    const success = await saveGallery(updatedItems);
+    return success ? newItems : null;
   };
 
   const updateItem = async (id: string, updates: Partial<GalleryItem>) => {
@@ -84,6 +91,7 @@ export function useGallery() {
     loadGallery,
     saveGallery,
     addItem,
+    addMultipleItems,
     updateItem,
     deleteItem,
     reorderItems,

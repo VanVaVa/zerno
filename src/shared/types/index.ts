@@ -115,7 +115,7 @@ export interface ServicesSectionContent {
 // Типы для галереи изображений
 export interface GalleryItem {
   id: string;
-  imageUrl: string;
+  imageUrl: string[];
   caption: string;
 }
 

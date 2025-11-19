@@ -44,7 +44,7 @@ const SingleServicePage: FC<{ serviceId: string }> = ({ serviceId }) => {
     <div>
       <div className={styles.headerImageWrapper}>
         <Image
-          src={service.gallery[0]}
+          src={decodeURIComponent(service.gallery[0])}
           layout="fill"
           objectFit="cover"
           alt=""
