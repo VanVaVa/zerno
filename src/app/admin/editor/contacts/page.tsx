@@ -12,6 +12,7 @@ import {
   Grid,
 } from "@mui/material";
 import { Save, Phone, Email, LocationOn, Language } from "@mui/icons-material";
+import { Telegram, WhatsApp } from "@mui/icons-material"; // Добавлены иконки
 import { useContacts } from "@/features/contacts/hooks/use-contacts";
 
 export default function ContactsEditorPage() {
@@ -23,6 +24,8 @@ export default function ContactsEditorPage() {
     address: "",
     mapLink: "",
     website: "",
+    telegram: "",
+    whatsapp: "",
   });
   const [message, setMessage] = useState("");
 
@@ -146,6 +149,36 @@ export default function ContactsEditorPage() {
                 }}
               />
 
+              {/* Добавлено поле для Telegram */}
+              <TextField
+                label="Ссылка на Telegram"
+                value={formData.telegram}
+                onChange={(e) => handleChange("telegram", e.target.value)}
+                fullWidth
+                placeholder="https://t.me/username или https://t.me/chatlink"
+                helperText="Введите ссылку на Telegram-чат или профиль"
+                InputProps={{
+                  startAdornment: (
+                    <Telegram sx={{ mr: 1, color: "text.secondary" }} />
+                  ),
+                }}
+              />
+
+              {/* Добавлено поле для WhatsApp */}
+              <TextField
+                label="Ссылка на WhatsApp"
+                value={formData.whatsapp}
+                onChange={(e) => handleChange("whatsapp", e.target.value)}
+                fullWidth
+                placeholder="https://wa.me/79991234567"
+                helperText="Введите ссылку для связи через WhatsApp"
+                InputProps={{
+                  startAdornment: (
+                    <WhatsApp sx={{ mr: 1, color: "text.secondary" }} />
+                  ),
+                }}
+              />
+
               <Button
                 variant="contained"
                 startIcon={<Save />}
@@ -155,6 +188,41 @@ export default function ContactsEditorPage() {
               >
                 {loadingContacts ? "Сохранение..." : "Сохранить"}
               </Button>
+            </Box>
+          </Paper>
+        </Grid>
+
+        {/* Блок с подсказками */}
+        <Grid size={{ xs: 12, md: 4 }}>
+          <Paper sx={{ p: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Подсказки по форматам ссылок
+            </Typography>
+            
+            <Box display="flex" flexDirection="column" gap={2}>
+              <Typography variant="body2">
+                <strong>Telegram:</strong><br />
+                • Для профиля: https://t.me/username<br />
+                • Для чата: https://t.me/chatname<br />
+                • С предзаполненным сообщением: https://t.me/username?start=hello
+              </Typography>
+
+              <Typography variant="body2">
+                <strong>WhatsApp:</strong><br />
+                • По номеру: https://wa.me/79991234567<br />
+                • С предзаполненным сообщением: https://wa.me/79991234567?text=Hello
+              </Typography>
+
+              <Typography variant="body2">
+                <strong>Телефон:</strong><br />
+                • Указывайте в международном формате: +7 (999) 123-45-67
+              </Typography>
+
+              <Typography variant="body2">
+                <strong>Карты:</strong><br />
+                • Яндекс.Карты: https://yandex.ru/maps/-/CDUfzBw2<br />
+                • Google Maps: https://goo.gl/maps/...
+              </Typography>
             </Box>
           </Paper>
         </Grid>

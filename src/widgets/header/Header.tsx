@@ -5,9 +5,11 @@ import styles from "./header.module.scss";
 import Link from "next/link";
 import { useState } from "react";
 import { pages } from "./constants";
+import { useContacts } from "@/features/contacts/hooks/use-contacts";
 
 const Header = () => {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
+  const { contacts, loadingContacts, errorContacts } = useContacts();
 
   return (
     <header className={styles.header}>
@@ -30,6 +32,23 @@ const Header = () => {
           <li className={styles.filled}>
             <Link href="/feedback">Заказать услугу</Link>
           </li>
+          {loadingContacts || errorContacts || !contacts.whatsapp ? null : (
+            <li>
+              <Link
+                href={contacts.whatsapp}
+                className={styles.whatsappButton}
+                target="_blank"
+              >
+                <Image
+                  src={"/images/whatsapp.svg"}
+                  width={48}
+                  height={48}
+                  alt=""
+                  priority
+                />
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
       <button

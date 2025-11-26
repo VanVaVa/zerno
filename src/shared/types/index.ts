@@ -128,10 +128,12 @@ export interface WowParkContent {
 }
 
 // Типы для контактов
-export interface ContactsContent {
+export type ContactsContent = {
   phone: string;
   email: string;
   address: string;
   mapLink: string;
   website: string;
-}
+  telegram: string;
+  whatsapp: string;
+};

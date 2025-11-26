@@ -93,3 +93,16 @@
     }
   }
 }
+
+.whatsappButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3px;
+  padding-left: 4px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background-color: #05c241;
+  margin-left: -40px;
+}

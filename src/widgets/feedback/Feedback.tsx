@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ChangeEvent, FormEvent, useState, useRef } from "react";
 import styles from "./feedback.module.scss";
 import { useContacts } from "@/features/contacts/hooks/use-contacts";
+import Link from "next/link";
 
 const Feedback = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -14,7 +15,7 @@ const Feedback = () => {
   const [question, setQuestion] = useState<string>("");
   const [agree, setAgree] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const { contacts, loadingContacts } = useContacts();
+  const { contacts, loadingContacts, errorContacts } = useContacts();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -76,94 +77,133 @@ const Feedback = () => {
 
   return (
     <div className={styles.wrapper} id="feedback">
-      <div className={styles.imageWrapper}>
-        <Image
-          src="/images/feedback.png"
-          alt=""
-          layout="fill"
-          objectFit="cover"
-        />
-      </div>
-      <div className={styles.content}>
-        <h1>Оставьте заявку уже сейчас и мы свяжемся с вами</h1>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.formWrapper}>
-            <input
-              placeholder="Имя"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              placeholder="Телефон"
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-            />
-            <input
-              placeholder="Ваш вопрос"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              required
-            />
-          </div>
-          <div className={styles.submitWrapper}>
-            <div className={styles.fileContainer}>
-              <div className={styles.fileInput}>
+      <div className={styles.mainContentWrapper}>
+        <div className={styles.imageWrapper}>
+          <Image
+            src="/images/feedback.png"
+            alt=""
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
+        <div className={styles.content}>
+          <h1>Оставьте заявку уже сейчас и мы свяжемся с вами</h1>
+          <form onSubmit={handleSubmit}>
+            <div className={styles.formWrapper}>
+              <input
+                placeholder="Имя"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                placeholder="Телефон"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+              />
+              <input
+                placeholder="Ваш вопрос"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.submitWrapper}>
+              <div className={styles.fileContainer}>
+                <div className={styles.fileInput}>
+                  <input
+                    id="file"
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                  />
+                  <label htmlFor="file">
+                    {file ? file.name : "Добавить файл"}
+                  </label>
+                </div>
+              </div>
+              <div className={styles.checkbox}>
                 <input
-                  id="file"
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
+                  type="checkbox"
+                  id="checkbox"
+                  name="checkbox"
+                  checked={agree}
+                  onChange={(e) => setAgree(e.target.checked)}
                 />
-                <label htmlFor="file">
-                  {file ? file.name : "Добавить файл"}
+                <label htmlFor="checkbox">
+                  Отправляя форму, вы даете согласие на обработку персональных
+                  данных
                 </label>
               </div>
+              <button type="submit" disabled={loadingContacts}>
+                Отправить
+              </button>
             </div>
-            <div className={styles.checkbox}>
-              <input
-                type="checkbox"
-                id="checkbox"
-                name="checkbox"
-                checked={agree}
-                onChange={(e) => setAgree(e.target.checked)}
-              />
-              <label htmlFor="checkbox">
-                Отправляя форму, вы даете согласие на обработку персональных
-                данных
-              </label>
-            </div>
-            <button type="submit" disabled={loadingContacts}>
-              Отправить
-            </button>
-          </div>
 
-          {/* Сообщение о статусе отправки */}
-          {message && (
-            <div
-              className={styles.message}
-              style={{
-                color:
-                  message === "Заявка отправлена успешно"
-                    ? "#73c886"
-                    : "#ea8282",
-                marginTop: "15px",
-                textAlign: "center",
-              }}
-            >
-              {message}
-            </div>
-          )}
-        </form>
+            {/* Сообщение о статусе отправки */}
+            {message && (
+              <div
+                className={styles.message}
+                style={{
+                  color:
+                    message === "Заявка отправлена успешно"
+                      ? "#73c886"
+                      : "#ea8282",
+                  marginTop: "15px",
+                  textAlign: "center",
+                }}
+              >
+                {message}
+              </div>
+            )}
+          </form>
+        </div>
+      </div>
+      <div className={styles.chatsWrapper}>
+        <h2>Напишите нам:</h2>
+        {loadingContacts || errorContacts ? null : (
+          <>
+            {contacts.whatsapp && (
+              <Link
+                href={contacts.whatsapp}
+                className={styles.whatsappButton}
+                target="_blank"
+              >
+                <Image
+                  src={"/images/whatsapp.svg"}
+                  width={48}
+                  height={48}
+                  alt=""
+                  priority
+                />
+              </Link>
+            )}
+            {contacts.telegram && (
+              <Link
+                href={contacts.telegram}
+                className={styles.telegramButton}
+                target="_blank"
+              >
+                <Image
+                  src={"/images/telegram.svg"}
+                  width={20}
+                  height={20}
+                  alt=""
+                  priority
+                />
+              </Link>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

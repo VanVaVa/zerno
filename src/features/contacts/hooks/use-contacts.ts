@@ -9,6 +9,8 @@ export function useContacts() {
     address: "",
     mapLink: "",
     website: "",
+    telegram: "",
+    whatsapp: "",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
@@ -31,6 +33,8 @@ export function useContacts() {
           address: "",
           mapLink: "",
           website: "",
+          telegram: "", // Добавлено
+          whatsapp: "", // Добавлено
         };
         setContacts(initialContacts);
         await firebaseApi.saveDocument("sections", "contacts", initialContacts);
